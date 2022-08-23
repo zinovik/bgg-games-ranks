@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { NowRequest, NowResponse } from '@now/node';
-import { getGamesData } from '../src/getGamesData';
+import { getGamesData } from '../src/get-games-data';
 
 const LOCAL_FILE_DEFAULT_GAMES_AMOUNT = 2000;
 const LOCAL_FILE_NAME = './public/bgg-games-ranks.json';

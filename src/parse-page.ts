@@ -1,24 +1,31 @@
 import { DOMParser } from 'xmldom';
-import { select } from 'xpath';
-import { Game } from './Game';
+import { select, SelectedValue } from 'xpath';
 
 const GAME_RANKS_X_PATH = `//td[@class='collection_rank']`;
 const GAME_NAMES_YEARS_X_PATH = `//div[starts-with(@id,'results_objectname')]`;
-const GAME_IDS_X_PATH = `//div[starts-with(@id,'results_objectname')]//a/@href`;
+const GAME_LINK_X_PATH = `//div[starts-with(@id,'results_objectname')]//a/@href`;
+
+export interface Game {
+  rank: number;
+  name: string;
+  year: string;
+  id: string;
+}
+
+const getString = (selectedValue: SelectedValue): string =>
+  (selectedValue as { textContent: string }).textContent.trim();
+const getIdFromLink = (link: string): string => link.split('/')[2];
 
 export const parsePage = (page: string): Game[] => {
   const dom = new DOMParser({
     errorHandler: {
       warning: () => null,
-      error: () => null,
-      fatalError: () => null,
     },
   }).parseFromString(page);
 
-  // @ts-ignore
-  const ranks = select(GAME_RANKS_X_PATH, dom).map((selectedValue) => selectedValue.textContent.trim());
-  // @ts-ignore
-  const namesYears = select(GAME_NAMES_YEARS_X_PATH, dom).map((selectedValue) => selectedValue.textContent.trim());
+  const ranks = select(GAME_RANKS_X_PATH, dom).map((selectedValue) => getString(selectedValue));
+  const namesYears = select(GAME_NAMES_YEARS_X_PATH, dom).map((selectedValue) => getString(selectedValue));
+  const ids = select(GAME_LINK_X_PATH, dom).map((selectedValue) => getIdFromLink(getString(selectedValue)));
 
   const names: string[] = [];
   const years: string[] = [];
@@ -43,12 +50,6 @@ export const parsePage = (page: string): Game[] => {
     names.push(name);
     years.push(year);
   });
-
-  const ids = select(GAME_IDS_X_PATH, dom).map(
-    (selectedValue) =>
-      // @ts-ignore
-      selectedValue.textContent.trim().split('/')[2],
-  );
 
   return ranks.map((rank, i) => ({
     rank: Number(rank),

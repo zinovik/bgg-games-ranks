@@ -1,5 +1,5 @@
 import { NowRequest, NowResponse } from '@now/node';
-import { getGamesData } from '../src/getGamesData';
+import { getGamesData } from '../src/get-games-data';
 
 const DEFAULT_GAMES_AMOUNT = 100;
 
@@ -8,7 +8,7 @@ export default async (req: NowRequest, res: NowResponse): Promise<void> => {
     query: { amount, load },
   } = req;
 
-  console.log(`Request: amount - '${amount}', load - '${load}'`);
+  console.log(`Request | amount: '${amount}' | load: '${load}'`);
 
   try {
     const games = await getGamesData(

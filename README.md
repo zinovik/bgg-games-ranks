@@ -9,7 +9,7 @@ curl 'http://localhost:3000/api/get-games?amount=99&load'
 ```
 
 ```bash
-npm run update-local-file
+npm run update
 ```
 
 Interface:
