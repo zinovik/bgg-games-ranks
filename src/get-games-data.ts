@@ -10,7 +10,10 @@ interface BGGGamesRanksData {
 export const getGamesData = async (amount: number, load: boolean): Promise<BGGGamesRanksData> => {
   if (!load && bggGamesRanksFile.games.length >= amount) {
     console.log('The games were returned from the local file');
-    return bggGamesRanksFile;
+    return {
+      games: bggGamesRanksFile.games.slice(0, amount),
+      date: bggGamesRanksFile.date,
+    };
   }
 
   const pagesAmount: number = Math.ceil(amount / GAMES_PER_PAGE);
