@@ -1,21 +1,12 @@
 import { getPage, GAMES_PER_PAGE } from './get-page';
 import { parsePage, Game } from './parse-page';
-import bggGamesRanksFile from '../public/bgg-games-ranks.json';
 
 interface BGGGamesRanksData {
   date: string;
   games: Game[];
 }
 
-export const getGamesData = async (amount: number, load: boolean): Promise<BGGGamesRanksData> => {
-  if (!load && bggGamesRanksFile.games.length >= amount) {
-    console.log('The games were returned from the local file');
-    return {
-      games: bggGamesRanksFile.games.slice(0, amount),
-      date: bggGamesRanksFile.date,
-    };
-  }
-
+export const getGamesData = async (amount: number): Promise<BGGGamesRanksData> => {
   const pagesAmount: number = Math.ceil(amount / GAMES_PER_PAGE);
 
   const gamesByPages: Game[][] = await Promise.all(
@@ -27,7 +18,6 @@ export const getGamesData = async (amount: number, load: boolean): Promise<BGGGa
 
   const games: Game[] = gamesByPages.reduce((acc, pageGames) => [...acc, ...pageGames], []);
 
-  console.log('The loaded games were returned');
   return {
     games: games.slice(0, amount),
     date: new Date().toISOString(),

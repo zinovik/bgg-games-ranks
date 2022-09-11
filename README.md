@@ -5,11 +5,7 @@ npm run start:dev
 ```
 
 ```bash
-curl 'http://localhost:3000/api/get-games?amount=99&load'
-```
-
-```bash
-npm run update
+curl 'http://localhost:3000/api/get-games?amount=101'
 ```
 
 Interface:
@@ -27,3 +23,5 @@ interface Game {
   id: string;
 }
 ```
+
+Static file (faster but a little bit outdated) can be find here: https://raw.githubusercontent.com/zinovik/bgg-games-ranks-data/main/bgg-games-ranks.json
