@@ -13,15 +13,12 @@ Interface:
 ```typescript
 interface BGGGamesRanksData {
   date: string;
-  games: Game[];
+  games: {
+    rank: number;
+    name: string;
+    year: string;
+    id: string;
+  }[];
 }
-
-interface Game {
-  rank: number;
-  name: string;
-  year: string;
-  id: string;
-}
-```
 
 Static file (faster but a little bit outdated) can be find here: https://raw.githubusercontent.com/zinovik/bgg-games-ranks-data/main/bgg-games-ranks.json
