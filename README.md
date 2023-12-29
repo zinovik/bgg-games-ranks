@@ -22,5 +22,3 @@ interface BGGGamesRanksData {
     id: string;
   }[];
 }
-
-Static file (faster but a little bit outdated) can be find here: https://raw.githubusercontent.com/zinovik/bgg-games-ranks-data/main/bgg-games-ranks.json
